@@ -4,6 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>AR Video Try-On</title>
+
+  <!-- A-Frame & MindAR -->
   <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
 
@@ -160,25 +162,34 @@
   </div>
 
   <!-- AR Scene -->
-  <a-scene 
-    mindar-image="imageTargetSrc: ./targets.mind" 
-    color-space="sRGB" 
-    renderer="colorManagement: true, physicallyCorrectLights, antialias: true" 
-    vr-mode-ui="enabled: false" 
+  <a-scene
+    mindar-image="imageTargetSrc: ./targets.mind; filterMinCF: 0.0001; filterBeta: 0.001"
+    renderer="colorManagement: false; physicallyCorrectLights: false; antialias: true; logarithmicDepthBuffer: true"
+    loading-screen="enabled: false"
+    vr-mode-ui="enabled: false"
     device-orientation-permission-ui="enabled: false">
 
     <a-assets>
-      <video id="plan1Video" src="plan1.mp4" playsinline preload="auto" loop></video>
+      <!-- Muted for instant autoplay -->
+      <video id="plan1Video" src="plan1.mp4" playsinline preload="auto" loop muted></video>
     </a-assets>
 
     <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
 
-    <a-entity id="target1" mindar-image-target="targetIndex: 0">
-      <a-plane 
-        id="videoDisplay" 
-        position="0 0 0" 
-        width="1" 
-        height="0.56" 
+    <!-- Stabilized Target Tracking -->
+    <a-entity
+      id="target1"
+      mindar-image-target="targetIndex: 0"
+      smooth="true"
+      smoothCount="10"
+      smoothTolerance="0.01"
+      smoothThreshold="5">
+
+      <a-plane
+        id="videoDisplay"
+        position="0 0 0"
+        width="1"
+        height="0.56"
         material="shader: flat">
       </a-plane>
     </a-entity>
