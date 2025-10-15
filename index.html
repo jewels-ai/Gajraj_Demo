@@ -118,7 +118,7 @@
       display: none !important;
     }
 
-    /* 📱 Responsive Adjustments */
+    /* Responsive */
     @media (max-width: 480px) {
       .plan-button {
         padding: 12px 18px;
@@ -141,12 +141,12 @@
   <!-- Play Video -->
   <button class="plan-button" id="toggleButton">▶️ Play Video</button>
 
-  <!-- Try on Jewellery (Bottom Left) -->
+  <!-- Try on Jewellery -->
   <button class="plan-button" id="tryJewelsBtn" onclick="window.location.href='https://jewels-ai.github.io/Jewellery_Demo/'">
     🌟 Try on Jewellery
   </button>
 
-  <!-- Savings Plan (Bottom Center) -->
+  <!-- Savings Plan -->
   <button class="plan-button" id="savingsBtn" onclick="window.open('https://jewels-ai.github.io/savings-plan/')">
     💰 Savings Plan
   </button>
@@ -170,13 +170,11 @@
     device-orientation-permission-ui="enabled: false">
 
     <a-assets>
-      <!-- 🎧 Audio enabled -->
       <video id="plan1Video" src="plan1.mp4" playsinline preload="auto" loop></video>
     </a-assets>
 
     <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
 
-    <!-- Stabilized Target Tracking -->
     <a-entity
       id="target1"
       mindar-image-target="targetIndex: 0"
@@ -209,7 +207,6 @@
 
     let isPlaying = false;
 
-    // ✅ Show buttons & logo when target is found
     target.addEventListener('targetFound', () => {
       [toggleButton, tryJewelsBtn, savingsBtn, locationBtn, whatsappBtn, logo].forEach(el => {
         el.style.opacity = '1';
@@ -217,7 +214,6 @@
       });
     });
 
-    // ❌ Hide buttons when target is lost
     target.addEventListener('targetLost', () => {
       [toggleButton, tryJewelsBtn, savingsBtn, locationBtn, whatsappBtn, logo].forEach(el => {
         el.style.opacity = '0';
@@ -228,7 +224,6 @@
       toggleButton.textContent = "▶️ Play Video";
     });
 
-    // ▶️ Play / ⏸ Pause toggle
     toggleButton.addEventListener('click', () => {
       if (!isPlaying) {
         videoDisplay.setAttribute('material', 'src', '#plan1Video');
@@ -242,16 +237,13 @@
       }
     });
 
-    /* 🚫 Disable Right-click */
     document.addEventListener("contextmenu", (e) => e.preventDefault());
-
-    /* 🚫 Disable Inspect Element & Common Dev Shortcuts */
     document.addEventListener("keydown", (e) => {
       if (
-        e.key === "F12" || 
-        (e.ctrlKey && e.shiftKey && e.key === "I") || 
-        (e.ctrlKey && e.shiftKey && e.key === "J") || 
-        (e.ctrlKey && e.key === "u") || 
+        e.key === "F12" ||
+        (e.ctrlKey && e.shiftKey && e.key === "I") ||
+        (e.ctrlKey && e.shiftKey && e.key === "J") ||
+        (e.ctrlKey && e.key === "u") ||
         (e.ctrlKey && e.shiftKey && e.key === "C")
       ) {
         e.preventDefault();
